@@ -41,5 +41,5 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
 
   "cSpell.ignorePaths": ["package.json", "pnpm-lock.yaml", "/node_modules", "/.vscode"],
-  "cSpell.words": ["nextjs", "Shouty", "tailwindcss"]
+  "cSpell.words": ["nextjs", "Shouty", "tailwindcss", "YUMEMI"]
 }
