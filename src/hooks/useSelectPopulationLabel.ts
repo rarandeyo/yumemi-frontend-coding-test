@@ -8,7 +8,7 @@ export const useSelectPopulationLabel = (): {
 } => {
   const [selectedLabel, setSelectedLabel] = useState<PopulationLabelType>('総人口')
 
-  const handlePopulationLabel = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handlePopulationLabel = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const selectedValue = e.currentTarget.value
     const selected = POPULATION_LABELS.find((option) => option === selectedValue)
     if (selected) {
