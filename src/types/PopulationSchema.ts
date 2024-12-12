@@ -11,7 +11,8 @@ const PopulationCategorySchema = z.object({
   data: z.array(PopulationDataSchema),
 })
 
-const PopulationResultSchema = z.object({
+export const PopulationResultSchema = z.object({
+  prefCode: z.number(),
   boundaryYear: z.number(),
   data: z.array(PopulationCategorySchema).length(4),
 })
