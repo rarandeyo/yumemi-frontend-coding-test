@@ -5,7 +5,11 @@ const PrefectureSchema = z.object({
   prefName: z.string(),
 })
 
+const PrefectureStateSchema = PrefectureSchema.extend({
+  isSelected: z.boolean(),
+})
 export const PrefecturesSchema = z.array(PrefectureSchema).length(47)
+export const PrefectureStatesSchema = z.array(PrefectureStateSchema).length(47)
 
 export const PrefecturesResponseSchema = z.object({
   message: z.null(),
@@ -13,4 +17,5 @@ export const PrefecturesResponseSchema = z.object({
 })
 
 export type Prefectures = z.infer<typeof PrefecturesSchema>
+export type PrefectureStates = z.infer<typeof PrefectureStatesSchema>
 export type PrefecturesResponse = z.infer<typeof PrefecturesResponseSchema>

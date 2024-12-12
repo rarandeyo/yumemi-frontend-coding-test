@@ -1,5 +1,5 @@
 import { getApiConfig } from '@/config/apiConfig'
-import { PopulationDataResponseSchema, type PopulationResult } from '@/types/PopulationSchema'
+import { type PopulationResult, PopulationResultSchema } from '@/types/PopulationSchema'
 
 export const getPopulationData = async (prefCode: number): Promise<PopulationResult> => {
   const { baseUrl, apiKey } = getApiConfig()
@@ -22,15 +22,16 @@ export const getPopulationData = async (prefCode: number): Promise<PopulationRes
 
     const data = await res.json()
 
-    const validatedData = PopulationDataResponseSchema.parse(data)
-    return validatedData.result
+    //APIのdataにprefCodeを追加
+    const dataWithPrefCode = {
+      prefCode,
+      ...data.result,
+    }
+
+    const validatedData = PopulationResultSchema.parse(dataWithPrefCode)
+    return validatedData
   } catch (error) {
     console.error(`都道府県コード ${prefCode} のデータ取得中にエラーが発生しました:`, error)
     throw error
   }
-}
-
-export const getAllPopulationList = async (prefCodes: number[]): Promise<PopulationResult[]> => {
-  const promises = prefCodes.map((prefCode) => getPopulationData(prefCode))
-  return Promise.all(promises)
 }
