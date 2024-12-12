@@ -36,7 +36,7 @@ export const getPopulationData = async (prefCode: number): Promise<PopulationRes
   }
 }
 
-export const getAllPopulationList = async (prefCodes: number[]): Promise<PopulationResult[]> => {
+export const getPopulationDataList = async (prefCodes: number[]): Promise<PopulationResult[]> => {
   const promises = prefCodes.map((prefCode) => getPopulationData(prefCode))
   return Promise.all(promises)
 }
