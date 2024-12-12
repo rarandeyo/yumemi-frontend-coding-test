@@ -1,6 +1,5 @@
 import { z } from 'zod'
 import { PopulationLabelSchema } from './PopulationLabelSchema'
-
 const PopulationDataSchema = z.object({
   year: z.number(),
   value: z.number(),
