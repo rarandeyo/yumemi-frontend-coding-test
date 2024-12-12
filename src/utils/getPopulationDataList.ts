@@ -35,8 +35,3 @@ export const getPopulationData = async (prefCode: number): Promise<PopulationRes
     throw error
   }
 }
-
-export const getPopulationDataList = async (prefCodes: number[]): Promise<PopulationResult[]> => {
-  const promises = prefCodes.map((prefCode) => getPopulationData(prefCode))
-  return Promise.all(promises)
-}
