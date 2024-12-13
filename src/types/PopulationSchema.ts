@@ -18,7 +18,7 @@ const PopulationCompositionPerYearSchema = z.object({
   ),
 })
 
-export const PopulationDataWithPrefCodeSchema = PopulationCompositionPerYearSchema.extend({
+const PopulationDataWithPrefCodeSchema = PopulationCompositionPerYearSchema.extend({
   prefCode: PrefectureSchema.shape.prefCode,
 })
 
