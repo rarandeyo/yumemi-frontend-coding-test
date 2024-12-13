@@ -1,5 +1,5 @@
 import { PrefectureSchema } from '@/types/PrefecturesSchema'
-import { getPopulationData } from '@/utils/getPopulationDataList'
+import { getPopulationData } from '@/utils/getPopulationData'
 import { type NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 
