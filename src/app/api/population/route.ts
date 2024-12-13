@@ -1,15 +1,16 @@
+import { PrefectureSchema } from '@/types/PrefecturesSchema'
 import { getPopulationData } from '@/utils/getPopulationDataList'
 import { type NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 
-const populationListParamsSchema = z.number().min(1).max(47)
+const PopulationListParamsSchema = PrefectureSchema.shape.prefCode
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const prefCode = Number(searchParams.get('prefCode'))
 
   try {
-    const validatedPrefCode = populationListParamsSchema.parse(prefCode)
+    const validatedPrefCode = PopulationListParamsSchema.parse(prefCode)
     const populationList = await getPopulationData(validatedPrefCode)
     return NextResponse.json(populationList)
   } catch (error) {
