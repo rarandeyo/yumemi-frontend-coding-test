@@ -1,7 +1,8 @@
 import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
 import type { Prefecture, PrefectureState } from '@/types/PrefecturesSchema'
 import type React from 'react'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
+import { useSelectedPopulationList } from './useSelectedPopulationList'
 
 type UsePrefectureCheckboxesReturn = {
   prefectureStates: PrefectureState[]
@@ -19,7 +20,7 @@ export const usePrefectureCheckboxes = (
     })),
   )
 
-  const [populationList, setPopulationList] = useState<PopulationDataWithPrefCode[]>([])
+  const { populationList, addPopulationList, deletePopulationList } = useSelectedPopulationList()
 
   const togglePrefectureSelection = (prefCode: number): void =>
     setPrefectureStates((prefStates) =>
@@ -28,34 +29,16 @@ export const usePrefectureCheckboxes = (
       ),
     )
 
-  const fetchPopulationData = useCallback(
-    async (prefCode: number): Promise<PopulationDataWithPrefCode> => {
-      try {
-        const response = await fetch(`/api/population?prefCode=${prefCode}`)
-        if (!response.ok) {
-          throw new Error('データの取得に失敗しました')
-        }
-        const data = await response.json()
-        return data
-      } catch (error) {
-        console.error('人口データの取得中にエラーが発生しました:', error)
-        throw error
-      }
-    },
-    [],
-  )
-
-  const handlePrefectureCheckboxes = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ): Promise<void> => {
+  const handlePrefectureCheckboxes = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const prefCode = Number(e.currentTarget.value)
+    const isChecked = e.currentTarget.checked
 
     togglePrefectureSelection(prefCode)
 
-    const isAlreadyFetched = populationList.some((data) => data.prefCode === prefCode)
-    if (!isAlreadyFetched) {
-      const newData = await fetchPopulationData(prefCode)
-      setPopulationList((prev) => [...prev, newData])
+    if (isChecked) {
+      await addPopulationList(prefCode)
+    } else {
+      deletePopulationList(prefCode)
     }
   }
 
