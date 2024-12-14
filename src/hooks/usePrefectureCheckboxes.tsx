@@ -2,11 +2,11 @@ import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
 import type { Prefecture, PrefectureState } from '@/types/PrefecturesSchema'
 import type React from 'react'
 import { useState } from 'react'
-import { useSelectedPopulationList } from './useSelectedPopulationList'
+import { useSelectedPopulationList } from './useSelectedPopulationData'
 
 type UsePrefectureCheckboxesReturn = {
   prefectureStates: PrefectureState[]
-  populationList: PopulationDataWithPrefCode[]
+  populationData: PopulationDataWithPrefCode[]
   handlePrefectureCheckboxes: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>
 }
 
@@ -20,7 +20,7 @@ export const usePrefectureCheckboxes = (
     })),
   )
 
-  const { populationList, addPopulationList, deletePopulationList } = useSelectedPopulationList()
+  const { populationData, addPopulationData, deletePopulationData } = useSelectedPopulationList()
 
   const togglePrefectureSelection = (prefCode: number): void =>
     setPrefectureStates((prefStates) =>
@@ -36,15 +36,15 @@ export const usePrefectureCheckboxes = (
     togglePrefectureSelection(prefCode)
 
     if (isChecked) {
-      await addPopulationList(prefCode)
+      await addPopulationData(prefCode)
     } else {
-      deletePopulationList(prefCode)
+      deletePopulationData(prefCode)
     }
   }
 
   return {
     prefectureStates,
-    populationList,
+    populationData,
     handlePrefectureCheckboxes,
   }
 }

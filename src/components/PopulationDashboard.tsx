@@ -13,7 +13,7 @@ type PopulationDashboardProps = {
 }
 
 export const PopulationDashboard: React.FC<PopulationDashboardProps> = ({ prefectures }) => {
-  const { prefectureStates, populationList, handlePrefectureCheckboxes } =
+  const { prefectureStates, populationData, handlePrefectureCheckboxes } =
     usePrefectureCheckboxes(prefectures)
 
   const { selectedLabel, handlePopulationLabel } = useSelectPopulationLabel()
@@ -29,7 +29,7 @@ export const PopulationDashboard: React.FC<PopulationDashboardProps> = ({ prefec
       />
       <PopulationGraph
         prefectureStates={prefectureStates}
-        populationList={populationList}
+        populationData={populationData}
         selectedLabel={selectedLabel}
       />
     </div>

@@ -19,16 +19,16 @@ import { useChartData } from '../hooks/useChartData'
 
 type PopulationGraphProps = {
   prefectureStates: PrefectureState[]
-  populationList: PopulationDataWithPrefCode[]
+  populationData: PopulationDataWithPrefCode[]
   selectedLabel: PopulationLabelType
 }
 
 export const PopulationGraph: React.FC<PopulationGraphProps> = ({
   prefectureStates,
-  populationList,
+  populationData,
   selectedLabel,
 }) => {
-  const { chartData } = useChartData(selectedLabel, populationList)
+  const { chartData } = useChartData(selectedLabel, populationData)
   const { getPrefectureName } = useGetPrefectureName(prefectureStates)
 
   return (
@@ -46,7 +46,7 @@ export const PopulationGraph: React.FC<PopulationGraphProps> = ({
               layout="horizontal"
               align="center"
             />
-            {populationList.map((prefecture) => (
+            {populationData.map((prefecture) => (
               <Line
                 key={prefecture.prefCode}
                 type="monotone"

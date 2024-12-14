@@ -12,11 +12,11 @@ type UseChartDataReturn = {
 
 export const useChartData = (
   selectedLabel: PopulationLabelType,
-  populationList: PopulationDataWithPrefCode[],
+  populationData: PopulationDataWithPrefCode[],
 ): UseChartDataReturn => {
-  if (populationList.length === 0) return { chartData: [] }
+  if (populationData.length === 0) return { chartData: [] }
 
-  const populationListFilterLabel = populationList.map((population) => ({
+  const populationListFilterLabel = populationData.map((population) => ({
     prefCode: population.prefCode,
     data: population.data.find((data) => data.label === selectedLabel)?.data ?? [],
   }))
