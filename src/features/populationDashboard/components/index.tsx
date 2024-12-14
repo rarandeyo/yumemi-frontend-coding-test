@@ -1,11 +1,11 @@
 'use client'
 
-import PopulationGraph from '@/features/population/components/PopulationGraph'
-import { SelectPopulationLabel } from '@/features/population/components/PopulationLabel'
-import { PrefectureCheckboxes } from '@/features/population/components/PrefectureCheckboxes'
-import { usePopulationLabel } from '@/features/population/hooks/usePopulationLabel'
-import { usePrefectureCheckboxes } from '@/features/population/hooks/usePrefectureCheckboxes'
-import type { Prefecture } from '@/features/population/types/PrefectureSchema'
+import PopulationGraph from '@/features/populationDashboard/components/PopulationGraph'
+import { SelectPopulationLabel } from '@/features/populationDashboard/components/PopulationLabel'
+import { PrefectureCheckboxes } from '@/features/populationDashboard/components/PrefectureCheckboxes'
+import { usePopulationLabel } from '@/features/populationDashboard/hooks/usePopulationLabel'
+import { usePrefectureCheckboxes } from '@/features/populationDashboard/hooks/usePrefectureCheckboxes'
+import type { Prefecture } from '@/features/populationDashboard/types/PrefectureSchema'
 import type React from 'react'
 
 type PopulationDashboardProps = {

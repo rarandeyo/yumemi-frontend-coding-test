@@ -1,4 +1,4 @@
-import type { PopulationDataWithPrefCode } from '@/features/population/types/PopulationSchema'
+import type { PopulationDataWithPrefCode } from '@/features/populationDashboard/types/PopulationSchema'
 import { useCallback, useState } from 'react'
 
 export const useSelectedPopulationList = (): {
@@ -11,7 +11,7 @@ export const useSelectedPopulationList = (): {
   const fetchPopulationData = useCallback(
     async (prefCode: number): Promise<PopulationDataWithPrefCode> => {
       try {
-        const response = await fetch(`/api/population?prefCode=${prefCode}`)
+        const response = await fetch(`/api/populationDashboard?prefCode=${prefCode}`)
         if (!response.ok) {
           throw new Error('データの取得に失敗しました')
         }

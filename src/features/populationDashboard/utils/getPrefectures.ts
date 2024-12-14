@@ -2,7 +2,7 @@ import { getApiConfig } from '@/config/apiConfig'
 import {
   type Prefecture,
   PrefecturesResponseSchema,
-} from '@/features/population/types/PrefectureSchema'
+} from '@/features/populationDashboard/types/PrefectureSchema'
 
 export const getPrefectures = async (): Promise<Prefecture[]> => {
   const { baseUrl, apiKey } = getApiConfig()

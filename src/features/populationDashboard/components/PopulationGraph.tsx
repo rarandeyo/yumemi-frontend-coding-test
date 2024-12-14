@@ -1,10 +1,10 @@
-import { CHART_STYLES } from '@/features/population/constants/chartStyles'
-import { useChartData } from '@/features/population/hooks/useChartData'
-import { useGetPrefectureName } from '@/features/population/hooks/usePrefectureName'
-import type { PopulationLabelType } from '@/features/population/types/PopulationLabelSchema'
-import type { PopulationDataWithPrefCode } from '@/features/population/types/PopulationSchema'
-import type { PrefectureState } from '@/features/population/types/PrefectureSchema'
-import { getLineColor } from '@/features/population/utils/getLineColor'
+import { CHART_STYLES } from '@/features/populationDashboard/constants/chartStyles'
+import { useChartData } from '@/features/populationDashboard/hooks/useChartData'
+import { useGetPrefectureName } from '@/features/populationDashboard/hooks/usePrefectureName'
+import type { PopulationLabelType } from '@/features/populationDashboard/types/PopulationLabelSchema'
+import type { PopulationDataWithPrefCode } from '@/features/populationDashboard/types/PopulationSchema'
+import type { PrefectureState } from '@/features/populationDashboard/types/PrefectureSchema'
+import { getLineColor } from '@/features/populationDashboard/utils/getLineColor'
 import type React from 'react'
 
 import {
