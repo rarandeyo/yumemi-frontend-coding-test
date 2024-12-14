@@ -3,7 +3,7 @@ import type { PopulationDataWithPrefCode } from '../types/PopulationSchema'
 
 export const useSelectedPopulationList = (): {
   populationData: PopulationDataWithPrefCode[]
-  addPopulationData: (prefCode: number) => void
+  addPopulationData: (prefCode: number) => Promise<void>
   deletePopulationData: (prefCode: number) => void
 } => {
   const [populationData, setPopulationData] = useState<PopulationDataWithPrefCode[]>([])
@@ -26,13 +26,13 @@ export const useSelectedPopulationList = (): {
   )
 
   const addPopulationData = useCallback(
-    async (prefCode: number) => {
+    async (prefCode: number): Promise<void> => {
       const newData = await fetchPopulationData(prefCode)
       setPopulationData((prev) => [...prev, newData])
     },
     [fetchPopulationData],
   )
-  const deletePopulationData = useCallback((prefCode: number) => {
+  const deletePopulationData = useCallback((prefCode: number): void => {
     setPopulationData((prev) => prev.filter((data) => data.prefCode !== prefCode))
   }, [])
 

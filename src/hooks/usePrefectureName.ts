@@ -7,7 +7,7 @@ export const useGetPrefectureName = (
   getPrefectureName: (prefCode: number) => string
 } => {
   const getPrefectureName = useCallback(
-    (prefCode: number) => {
+    (prefCode: number): string => {
       return prefectureStates.find((pref) => pref.prefCode === prefCode)?.prefName ?? 'undefined'
     },
     [prefectureStates],
