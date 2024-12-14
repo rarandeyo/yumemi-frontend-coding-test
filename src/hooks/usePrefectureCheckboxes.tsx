@@ -1,7 +1,7 @@
 import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
 import type { Prefecture, PrefectureState } from '@/types/PrefecturesSchema'
 import type React from 'react'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useSelectedPopulationList } from './useSelectedPopulationData'
 
 type UsePrefectureCheckboxesReturn = {
@@ -22,25 +22,29 @@ export const usePrefectureCheckboxes = (
 
   const { populationData, addPopulationData, deletePopulationData } = useSelectedPopulationList()
 
-  const togglePrefectureSelection = (prefCode: number): void =>
+  const togglePrefectureSelection = useCallback((prefCode: number): void => {
     setPrefectureStates((prefStates) =>
       prefStates.map((pref) =>
         pref.prefCode === prefCode ? { ...pref, isSelected: !pref.isSelected } : pref,
       ),
     )
+  }, [])
 
-  const handlePrefectureCheckboxes = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const prefCode = Number(e.currentTarget.value)
-    const isChecked = e.currentTarget.checked
+  const handlePrefectureCheckboxes = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+      const prefCode = Number(e.currentTarget.value)
+      const isChecked = e.currentTarget.checked
 
-    togglePrefectureSelection(prefCode)
+      togglePrefectureSelection(prefCode)
 
-    if (isChecked) {
-      await addPopulationData(prefCode)
-    } else {
-      deletePopulationData(prefCode)
-    }
-  }
+      if (isChecked) {
+        await addPopulationData(prefCode)
+      } else {
+        deletePopulationData(prefCode)
+      }
+    },
+    [addPopulationData, deletePopulationData, togglePrefectureSelection],
+  )
 
   return {
     prefectureStates,
