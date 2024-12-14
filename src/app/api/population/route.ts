@@ -11,8 +11,8 @@ export async function GET(request: NextRequest) {
 
   try {
     const validatedPrefCode = PopulationListParamsSchema.parse(prefCode)
-    const populationList = await getPopulationData(validatedPrefCode)
-    return NextResponse.json(populationList)
+    const populationData = await getPopulationData(validatedPrefCode)
+    return NextResponse.json(populationData)
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: 'Invalid prefCode' }, { status: 400 })
