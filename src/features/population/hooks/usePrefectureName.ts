@@ -1,4 +1,4 @@
-import type { PrefectureState } from '@/types/PrefecturesSchema'
+import type { PrefectureState } from '@/features/population/types/PrefectureSchema'
 import { useCallback } from 'react'
 
 export const useGetPrefectureName = (

@@ -1,5 +1,5 @@
-import { PopulationDashboard } from '@/components/PopulationDashboard'
-import { getPrefectures } from '@/utils/getPrefectures'
+import { PopulationDashboard } from '@/features/population/components'
+import { getPrefectures } from '@/features/population/utils/getPrefectures'
 
 export default async function Home() {
   const prefectures = await getPrefectures()

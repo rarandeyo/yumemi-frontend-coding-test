@@ -1,6 +1,6 @@
+import { PopulationLabelSchema } from '@/features/population/types/PopulationLabelSchema'
+import { PrefectureSchema } from '@/features/population/types/PrefectureSchema'
 import { z } from 'zod'
-import { PopulationLabelSchema } from './PopulationLabelSchema'
-import { PrefectureSchema } from './PrefecturesSchema'
 
 const PopulationCompositionPerYearSchema = z.object({
   boundaryYear: z.number().int(),
