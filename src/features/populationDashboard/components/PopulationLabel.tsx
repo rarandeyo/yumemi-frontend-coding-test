@@ -1,4 +1,7 @@
-import { POPULATION_LABELS, type PopulationLabelType } from '@/types/PopulationLabelSchema'
+import {
+  POPULATION_LABELS,
+  type PopulationLabelType,
+} from '@/features/populationDashboard/types/PopulationLabelSchema'
 import type React from 'react'
 
 type SelectPopulationLabelProps = {

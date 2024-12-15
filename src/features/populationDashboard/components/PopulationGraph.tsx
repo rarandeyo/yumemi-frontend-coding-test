@@ -1,10 +1,12 @@
-import { CHART_STYLES } from '@/constants/chartStyles'
-import { useGetPrefectureName } from '@/hooks/usePrefectureName'
-import type { PopulationLabelType } from '@/types/PopulationLabelSchema'
-import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
-import type { PrefectureState } from '@/types/PrefecturesSchema'
-import { getLineColor } from '@/utils/getLineColor'
+import { CHART_STYLES } from '@/features/populationDashboard/constants/chartStyles'
+import { useChartData } from '@/features/populationDashboard/hooks/useChartData'
+import { useGetPrefectureName } from '@/features/populationDashboard/hooks/usePrefectureName'
+import type { PopulationLabelType } from '@/features/populationDashboard/types/PopulationLabelSchema'
+import type { PopulationDataWithPrefCode } from '@/features/populationDashboard/types/PopulationSchema'
+import type { PrefectureState } from '@/features/populationDashboard/types/PrefectureSchema'
+import { getLineColor } from '@/features/populationDashboard/utils/getLineColor'
 import type React from 'react'
+
 import {
   CartesianGrid,
   Legend,
@@ -15,7 +17,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { useChartData } from '../hooks/useChartData'
 
 type PopulationGraphProps = {
   prefectureStates: PrefectureState[]

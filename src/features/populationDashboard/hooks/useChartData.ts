@@ -1,5 +1,5 @@
-import type { PopulationLabelType } from '@/types/PopulationLabelSchema'
-import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
+import type { PopulationLabelType } from '@/features/populationDashboard/types/PopulationLabelSchema'
+import type { PopulationDataWithPrefCode } from '@/features/populationDashboard/types/PopulationSchema'
 
 type ChartDataType = {
   year: number

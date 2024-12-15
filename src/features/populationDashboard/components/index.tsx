@@ -1,12 +1,12 @@
 'use client'
 
-import { usePrefectureCheckboxes } from '@/hooks/usePrefectureCheckboxes'
-import { useSelectPopulationLabel } from '@/hooks/useSelectPopulationLabel'
-import type { Prefecture } from '@/types/PrefecturesSchema'
+import PopulationGraph from '@/features/populationDashboard/components/PopulationGraph'
+import { SelectPopulationLabel } from '@/features/populationDashboard/components/PopulationLabel'
+import { PrefectureCheckboxes } from '@/features/populationDashboard/components/PrefectureCheckboxes'
+import { usePopulationLabel } from '@/features/populationDashboard/hooks/usePopulationLabel'
+import { usePrefectureCheckboxes } from '@/features/populationDashboard/hooks/usePrefectureCheckboxes'
+import type { Prefecture } from '@/features/populationDashboard/types/PrefectureSchema'
 import type React from 'react'
-import PopulationGraph from './PopulationGraph'
-import { PrefectureCheckboxes } from './PrefectureCheckboxes'
-import { SelectPopulationLabel } from './SelectPopulationLabel'
 
 type PopulationDashboardProps = {
   prefectures: Prefecture[]
@@ -16,7 +16,7 @@ export const PopulationDashboard: React.FC<PopulationDashboardProps> = ({ prefec
   const { prefectureStates, populationData, handlePrefectureCheckboxes } =
     usePrefectureCheckboxes(prefectures)
 
-  const { selectedLabel, handlePopulationLabel } = useSelectPopulationLabel()
+  const { selectedLabel, handlePopulationLabel } = usePopulationLabel()
   return (
     <div className="flex flex-col space-y-4">
       <PrefectureCheckboxes
