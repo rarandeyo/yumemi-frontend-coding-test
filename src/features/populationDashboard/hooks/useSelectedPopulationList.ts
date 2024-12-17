@@ -1,4 +1,6 @@
 import type { PopulationDataWithPrefCode } from '@/features/populationDashboard/types/PopulationSchema'
+import { apiYumemiClient } from '@/libs/apiYumemiClient'
+
 import { useCallback, useState } from 'react'
 
 export const useSelectedPopulationList = (): {
@@ -7,14 +9,18 @@ export const useSelectedPopulationList = (): {
   deletePopulationData: (prefCode: number) => void
 } => {
   const [populationData, setPopulationData] = useState<PopulationDataWithPrefCode[]>([])
-
   const fetchPopulationData = useCallback(
     async (prefCode: number): Promise<PopulationDataWithPrefCode> => {
       try {
-        const response = await fetch(`/api/populationDashboard?prefCode=${prefCode}`)
+        const response = await apiYumemiClient.api.population.$get({
+          query: {
+            prefCode: prefCode.toString(),
+          },
+        })
         if (!response.ok) {
-          throw new Error('データの取得に失敗しました')
+          throw new Error('人口データの取得中にエラーが発生しました')
         }
+
         const data = await response.json()
         return data
       } catch (error) {
