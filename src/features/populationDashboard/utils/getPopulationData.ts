@@ -1,38 +1,24 @@
-import { getApiConfig } from '@/config/apiConfig'
 import {
   PopulationCompositionPerYearResponseSchema,
   type PopulationDataWithPrefCode,
 } from '../types/PopulationSchema'
+import { yumemiApiFetcher } from './yumemiApiFetcher'
 
 export const getPopulationData = async (prefCode: number): Promise<PopulationDataWithPrefCode> => {
-  const { baseUrl, apiKey } = getApiConfig()
-
   try {
-    const res = await fetch(
-      `${baseUrl}/api/v1/population/composition/perYear?prefCode=${prefCode}`,
+    const validatedData = await yumemiApiFetcher(
+      `/api/v1/population/composition/perYear?prefCode=${prefCode}`,
+      PopulationCompositionPerYearResponseSchema,
       {
-        headers: {
-          'X-API-KEY': apiKey,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        cache: 'force-cache',
+        // 1ヶ月キャッシュする
+        next: { revalidate: 60 * 60 * 24 * 30 },
       },
     )
-    if (!res.ok) {
-      throw new Error(`API request failed with status ${res.status}`)
-    }
 
-    const data = await res.json()
-    const validatedData = PopulationCompositionPerYearResponseSchema.parse(data)
-
-    //APIのdataにprefCodeを追加
-    const dataWithPrefCode = {
+    return {
       prefCode,
       ...validatedData.result,
     }
-
-    return dataWithPrefCode
   } catch (error) {
     console.error(`都道府県コード ${prefCode} のデータ取得中にエラーが発生しました:`, error)
     throw error
