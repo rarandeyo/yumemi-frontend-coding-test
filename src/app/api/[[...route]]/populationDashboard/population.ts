@@ -17,8 +17,8 @@ const app = new Hono().get(
     }
   }),
   async (c) => {
+    const { prefCode } = c.req.valid('query')
     try {
-      const { prefCode } = c.req.valid('query')
       const populationData = await getPopulationData(prefCode)
       return c.json(populationData)
     } catch (error) {
