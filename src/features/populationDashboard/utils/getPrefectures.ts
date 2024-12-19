@@ -16,6 +16,9 @@ export const getPrefectures = async (): Promise<Prefecture[]> => {
       },
       cache: 'force-cache',
     })
+    if (!res.ok) {
+      throw new Error(`API request failed with status ${res.status}`)
+    }
 
     const data = await res.json()
     const validatedData = PrefecturesResponseSchema.parse(data)
