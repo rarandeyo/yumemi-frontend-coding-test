@@ -4,6 +4,7 @@ import type {
   Prefecture,
   PrefectureState,
 } from '@/features/populationDashboard/types/PrefectureSchema'
+import { NetworkError } from '@/types/Errors'
 import type React from 'react'
 import { useCallback, useState } from 'react'
 
@@ -44,14 +45,19 @@ export const usePrefectureCheckboxes = (
         } else {
           deletePopulationData(prefCode)
         }
-        togglePrefectureSelection(prefCode)
       } catch (error) {
-        console.error('人口データの処理中にエラーが発生しました:', error)
+        if (error instanceof NetworkError) {
+          console.error('人口データ取得中にネットワークエラーが発生しました:', error)
+          return
+        }
+        throw error
       }
+
+      // 成功した場合のみチェック状態をトグル
+      togglePrefectureSelection(prefCode)
     },
     [addPopulationData, deletePopulationData, togglePrefectureSelection],
   )
-
   return {
     prefectureStates,
     populationData,
