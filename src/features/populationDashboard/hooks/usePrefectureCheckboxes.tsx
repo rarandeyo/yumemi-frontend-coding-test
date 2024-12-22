@@ -38,12 +38,15 @@ export const usePrefectureCheckboxes = (
       const prefCode = Number(e.currentTarget.value)
       const isChecked = e.currentTarget.checked
 
-      togglePrefectureSelection(prefCode)
-
-      if (isChecked) {
-        await addPopulationData(prefCode)
-      } else {
-        deletePopulationData(prefCode)
+      try {
+        if (isChecked) {
+          await addPopulationData(prefCode)
+        } else {
+          deletePopulationData(prefCode)
+        }
+        togglePrefectureSelection(prefCode)
+      } catch (error) {
+        console.error('人口データの処理中にエラーが発生しました:', error)
       }
     },
     [addPopulationData, deletePopulationData, togglePrefectureSelection],
