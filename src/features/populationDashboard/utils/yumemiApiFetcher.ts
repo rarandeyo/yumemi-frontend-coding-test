@@ -1,4 +1,5 @@
 import { getApiConfig } from '@/config/apiConfig'
+import { HttpError } from '@/types/Errors'
 import type { z } from 'zod'
 
 /**
@@ -23,7 +24,7 @@ export async function yumemiApiFetcher<T>(
   })
 
   if (!res.ok) {
-    throw new Error(`Yumemi API request failed with status ${res.status}`)
+    throw new HttpError(res)
   }
 
   const data = await res.json()
