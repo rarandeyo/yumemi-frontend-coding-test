@@ -47,8 +47,7 @@ export const usePrefectureCheckboxes = (
         }
       } catch (error) {
         if (error instanceof NetworkError) {
-          console.error('人口データ取得中にネットワークエラーが発生しました:', error)
-          return
+          throw error
         }
         throw error
       }

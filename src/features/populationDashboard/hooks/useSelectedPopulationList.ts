@@ -1,6 +1,6 @@
 import type { PopulationDataWithPrefCode } from '@/features/populationDashboard/types/PopulationSchema'
 import { apiClient } from '@/libs/apiClient'
-import { NetworkError } from '@/types/Errors'
+import { HttpError, NetworkError } from '@/types/Errors'
 import { useCallback, useState } from 'react'
 
 export const useSelectedPopulationList = (): {
@@ -12,24 +12,19 @@ export const useSelectedPopulationList = (): {
 
   const fetchPopulationData = useCallback(
     async (prefCode: number): Promise<PopulationDataWithPrefCode> => {
-      try {
-        const response = await apiClient.api.population.$get({
-          query: {
-            prefCode: prefCode.toString(),
-          },
-        })
-        if (!response.ok) {
-          throw new Error('人口データの取得中にエラーが発生しました')
+      const response = await apiClient.api.population.$get({
+        query: {
+          prefCode: prefCode.toString(),
+        },
+      })
+      if (!response.ok) {
+        if (response.status === 424) {
+          throw new NetworkError('外部APIのネットワークエラーが発生しました')
         }
-        const data = await response.json()
-        return data
-      } catch (error) {
-        // ネットワークエラーをTypeErrorで判別してNetworkErrorで投げる
-        if (error instanceof TypeError) {
-          throw new NetworkError('ネットワークエラーが発生しました')
-        }
-        throw new Error(`人口データの取得中にエラーが発生しました: ${error}`)
+        throw new HttpError(response)
       }
+      const data = await response.json()
+      return data
     },
     [],
   )
