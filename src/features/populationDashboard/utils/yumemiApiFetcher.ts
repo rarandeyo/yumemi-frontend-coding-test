@@ -14,7 +14,7 @@ export async function yumemiApiFetcher<T>(
 ): Promise<T> {
   const { baseUrl, apiKey } = getApiConfig()
 
-  const res = await fetch(`${baseUrl}${endpoint}`, {
+  const response = await fetch(`${baseUrl}${endpoint}`, {
     headers: {
       'X-API-KEY': apiKey,
       Accept: 'application/json',
@@ -23,10 +23,10 @@ export async function yumemiApiFetcher<T>(
     ...cache,
   })
 
-  if (!res.ok) {
-    throw new HttpError(res)
+  if (!response.ok) {
+    throw new HttpError(response)
   }
 
-  const data = await res.json()
+  const data = await response.json()
   return schema.parse(data)
 }
