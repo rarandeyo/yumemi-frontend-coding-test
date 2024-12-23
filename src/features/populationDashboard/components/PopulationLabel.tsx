@@ -9,7 +9,7 @@ type SelectPopulationLabelProps = {
   handlePopulationLabel: (e: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-export const SelectPopulationLabel: React.FC<SelectPopulationLabelProps> = ({
+export const PopulationLabel: React.FC<SelectPopulationLabelProps> = ({
   selectedLabel,
   handlePopulationLabel,
 }) => {

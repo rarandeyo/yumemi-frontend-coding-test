@@ -2,7 +2,7 @@
 
 import { NetworkErrorMessage } from '@/features/populationDashboard/components/NetworkErrorMessage'
 import PopulationGraph from '@/features/populationDashboard/components/PopulationGraph'
-import { SelectPopulationLabel } from '@/features/populationDashboard/components/PopulationLabel'
+import { PopulationLabel } from '@/features/populationDashboard/components/PopulationLabel'
 import { PrefectureCheckboxes } from '@/features/populationDashboard/components/PrefectureCheckboxes'
 import { usePopulationLabel } from '@/features/populationDashboard/hooks/usePopulationLabel'
 import { usePrefectureCheckboxes } from '@/features/populationDashboard/hooks/usePrefectureCheckboxes'
@@ -27,7 +27,7 @@ export const PopulationDashboard: React.FC<PopulationDashboardProps> = ({ prefec
           prefectureStates={prefectureStates}
           handlePrefectureCheckboxes={handlePrefectureCheckboxes}
         />
-        <SelectPopulationLabel
+        <PopulationLabel
           selectedLabel={selectedLabel}
           handlePopulationLabel={handlePopulationLabel}
         />
