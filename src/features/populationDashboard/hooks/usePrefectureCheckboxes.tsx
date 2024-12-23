@@ -6,12 +6,14 @@ import type {
 } from '@/features/populationDashboard/types/PrefectureSchema'
 import { NetworkError } from '@/types/Errors'
 import type React from 'react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 type UsePrefectureCheckboxesReturn = {
   prefectureStates: PrefectureState[]
   populationData: PopulationDataWithPrefCode[]
   handlePrefectureCheckboxes: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>
+  error: string | null
+  clearError: () => void
 }
 
 export const usePrefectureCheckboxes = (
@@ -23,6 +25,21 @@ export const usePrefectureCheckboxes = (
       ...pref,
     })),
   )
+
+  const [error, setError] = useState<string | null>(null)
+
+  const clearError = useCallback(() => {
+    setError(null)
+  }, [])
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        clearError()
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [error, clearError])
 
   const { populationData, addPopulationData, deletePopulationData } = useSelectedPopulationList()
 
@@ -42,24 +59,26 @@ export const usePrefectureCheckboxes = (
       try {
         if (isChecked) {
           await addPopulationData(prefCode)
+          togglePrefectureSelection(prefCode)
         } else {
           deletePopulationData(prefCode)
+          togglePrefectureSelection(prefCode)
         }
       } catch (error) {
         if (error instanceof NetworkError) {
-          throw error
+          setError('ネットワークエラーが発生しました。時間をおいて再度お試しください。')
         }
-        throw error
+        throw new Error('人口データの取得に失敗しました')
       }
-
-      // 成功した場合のみチェック状態をトグル
-      togglePrefectureSelection(prefCode)
     },
     [addPopulationData, deletePopulationData, togglePrefectureSelection],
   )
+
   return {
     prefectureStates,
     populationData,
     handlePrefectureCheckboxes,
+    error,
+    clearError,
   }
 }
