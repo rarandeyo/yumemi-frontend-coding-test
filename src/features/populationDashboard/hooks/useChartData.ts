@@ -3,7 +3,7 @@ import type { PopulationDataWithPrefCode } from '@/features/populationDashboard/
 
 type ChartDataType = {
   year: number
-  [key: number]: number
+  [prefCode: number]: number
 }
 
 type UseChartDataReturn = {
@@ -16,20 +16,20 @@ export const useChartData = (
 ): UseChartDataReturn => {
   if (populationData.length === 0) return { chartData: [] }
 
-  const populationListFilterLabel = populationData.map((population) => ({
-    prefCode: population.prefCode,
-    data: population.data.find((data) => data.label === selectedLabel)?.data ?? [],
+  const filteredPopulationData = populationData.map(({ prefCode, data }) => ({
+    prefCode,
+    data: data.find(({ label }) => label === selectedLabel)?.data ?? [],
   }))
 
-  const years = populationListFilterLabel[0].data.map((dataPerYear) => dataPerYear.year)
+  // 最初の都道府県データを基準として共通の年リストを取得
+  const years = filteredPopulationData[0]?.data.map(({ year }) => year) || []
 
   const chartData = years.map((year) => {
+    // 年ごとの初期データを生成
     const rowData: ChartDataType = { year }
 
-    for (const populationFilterLabel of populationListFilterLabel) {
-      const prefCode = populationFilterLabel.prefCode
-      const populationValue =
-        populationFilterLabel.data.find((dataPerYear) => dataPerYear.year === year)?.value ?? 0
+    for (const { prefCode, data } of filteredPopulationData) {
+      const populationValue = data.find((entry) => entry.year === year)?.value ?? 0
       rowData[prefCode] = populationValue
     }
 
