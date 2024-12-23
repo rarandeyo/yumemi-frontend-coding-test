@@ -34,7 +34,6 @@ export const usePrefectureCheckboxes = (
   }, [])
 
   useEffect(() => {
-    // Optional: clear error after 3 seconds
     if (error) {
       const timer = setTimeout(() => {
         clearError()
