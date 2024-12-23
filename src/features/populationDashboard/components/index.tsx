@@ -1,5 +1,6 @@
 'use client'
 
+import { NetworkErrorMessage } from '@/features/populationDashboard/components/NetworkErrorMessage'
 import PopulationGraph from '@/features/populationDashboard/components/PopulationGraph'
 import { SelectPopulationLabel } from '@/features/populationDashboard/components/PopulationLabel'
 import { PrefectureCheckboxes } from '@/features/populationDashboard/components/PrefectureCheckboxes'
@@ -13,25 +14,29 @@ type PopulationDashboardProps = {
 }
 
 export const PopulationDashboard: React.FC<PopulationDashboardProps> = ({ prefectures }) => {
-  const { prefectureStates, populationData, handlePrefectureCheckboxes } =
+  const { prefectureStates, populationData, handlePrefectureCheckboxes, error, clearError } =
     usePrefectureCheckboxes(prefectures)
 
   const { selectedLabel, handlePopulationLabel } = usePopulationLabel()
+
   return (
-    <div className="flex flex-col space-y-4">
-      <PrefectureCheckboxes
-        prefectureStates={prefectureStates}
-        handlePrefectureCheckboxes={handlePrefectureCheckboxes}
-      />
-      <SelectPopulationLabel
-        selectedLabel={selectedLabel}
-        handlePopulationLabel={handlePopulationLabel}
-      />
-      <PopulationGraph
-        prefectureStates={prefectureStates}
-        populationData={populationData}
-        selectedLabel={selectedLabel}
-      />
+    <div className="relative">
+      {error && <NetworkErrorMessage message={error} onClose={clearError} />}
+      <div className="flex flex-col space-y-4">
+        <PrefectureCheckboxes
+          prefectureStates={prefectureStates}
+          handlePrefectureCheckboxes={handlePrefectureCheckboxes}
+        />
+        <SelectPopulationLabel
+          selectedLabel={selectedLabel}
+          handlePopulationLabel={handlePopulationLabel}
+        />
+        <PopulationGraph
+          prefectureStates={prefectureStates}
+          populationData={populationData}
+          selectedLabel={selectedLabel}
+        />
+      </div>
     </div>
   )
 }
