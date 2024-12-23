@@ -1,3 +1,4 @@
+import { useNetworkErrorMessage } from '@/features/populationDashboard/hooks/NetworkErrorMessage'
 import { useSelectedPopulationList } from '@/features/populationDashboard/hooks/useSelectedPopulationList'
 import type { PopulationDataWithPrefCode } from '@/features/populationDashboard/types/PopulationSchema'
 import type {
@@ -5,7 +6,7 @@ import type {
   PrefectureState,
 } from '@/features/populationDashboard/types/PrefectureSchema'
 import { NetworkError } from '@/types/Errors'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import type React from 'react'
 
 type UsePrefectureCheckboxesReturn = {
@@ -25,24 +26,10 @@ export const usePrefectureCheckboxes = (
       ...pref,
     })),
   )
-  const [error, setError] = useState<string | null>(null)
 
   const [processingPrefCode, setProcessingPrefCode] = useState<number | null>(null)
-
-  const clearError = useCallback(() => {
-    setError(null)
-  }, [])
-
-  useEffect(() => {
-    if (error) {
-      const timer = setTimeout(() => {
-        clearError()
-      }, 3000)
-      return () => clearTimeout(timer)
-    }
-  }, [error, clearError])
-
   const { populationData, addPopulationData, deletePopulationData } = useSelectedPopulationList()
+  const { error, showError, clearError } = useNetworkErrorMessage()
 
   const togglePrefectureSelection = useCallback((prefCode: number): void => {
     setPrefectureStates((prefStates) =>
@@ -71,14 +58,20 @@ export const usePrefectureCheckboxes = (
         }
       } catch (error) {
         if (error instanceof NetworkError) {
-          setError('ネットワークエラーが発生しました。時間をおいて再度お試しください。')
+          showError('ネットワークエラーが発生しました。時間をおいて再度お試しください。')
         }
         throw new Error('人口データの取得に失敗しました')
       } finally {
         setProcessingPrefCode(null)
       }
     },
-    [addPopulationData, deletePopulationData, togglePrefectureSelection, processingPrefCode],
+    [
+      addPopulationData,
+      deletePopulationData,
+      togglePrefectureSelection,
+      processingPrefCode,
+      showError,
+    ],
   )
 
   return {

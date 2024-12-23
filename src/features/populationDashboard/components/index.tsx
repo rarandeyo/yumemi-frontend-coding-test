@@ -21,7 +21,7 @@ export const PopulationDashboard: React.FC<PopulationDashboardProps> = ({ prefec
 
   return (
     <div className="relative">
-      {error && <NetworkErrorMessage message={error} onClose={clearError} />}
+      <NetworkErrorMessage message={error} onClose={clearError} />
       <div className="flex flex-col space-y-4">
         <PrefectureCheckboxes
           prefectureStates={prefectureStates}
