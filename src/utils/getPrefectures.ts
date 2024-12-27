@@ -11,6 +11,7 @@ export const getPrefectures = async (): Promise<Prefectures> => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      cache: 'force-cache',
     })
 
     const data = await res.json()
