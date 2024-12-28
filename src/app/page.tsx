@@ -1,4 +1,5 @@
 import { PrefectureCheckboxes } from '@/components/PrefectureCheckboxes'
+import { SelectPopulationLabel } from '@/components/SelectPopulationLabel'
 import { getPrefectures } from '@/utils/getPrefectures'
 
 export default async function Home() {
@@ -6,6 +7,7 @@ export default async function Home() {
   return (
     <main className="mx-auto flex w-full max-w-7xl flex-col space-y-2 px-4 md:space-y-4 md:px-6">
       <PrefectureCheckboxes prefectures={prefectures} />
+      <SelectPopulationLabel />
     </main>
   )
 }
