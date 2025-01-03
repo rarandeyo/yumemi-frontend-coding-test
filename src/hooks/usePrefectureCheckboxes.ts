@@ -1,5 +1,5 @@
 import type { PopulationResult } from '@/types/PopulationSchema'
-import type { PrefectureStates } from '@/types/PrefecturesSchema'
+import type { PrefectureStates, Prefectures } from '@/types/PrefecturesSchema'
 import type React from 'react'
 import { useCallback, useState } from 'react'
 
@@ -10,21 +10,22 @@ type UsePrefectureCheckboxesReturn = {
 }
 
 export const usePrefectureCheckboxes = (
-  defaultPrefectureStates: PrefectureStates,
+  prefectures: Prefectures,
 ): UsePrefectureCheckboxesReturn => {
-  const [prefectureStates, setPrefectureStates] =
-    useState<PrefectureStates>(defaultPrefectureStates)
+  const [prefectureStates, setPrefectureStates] = useState(() =>
+    prefectures.map((pref) => ({
+      isSelected: false,
+      ...pref,
+    })),
+  )
 
   const [populationList, setPopulationList] = useState<PopulationResult[]>([])
 
   const togglePrefectureSelection = (prefCode: number): void =>
-    setPrefectureStates(
-      (prevStates: PrefectureStates): PrefectureStates =>
-        prevStates.map((prefecture) =>
-          prefecture.prefCode === prefCode
-            ? { ...prefecture, isSelected: !prefecture.isSelected }
-            : prefecture,
-        ),
+    setPrefectureStates((prefStates) =>
+      prefStates.map((pref) =>
+        pref.prefCode === prefCode ? { ...pref, isSelected: !pref.isSelected } : pref,
+      ),
     )
 
   const fetchPopulationData = useCallback(async (prefCode: number): Promise<PopulationResult> => {
