@@ -1,12 +1,8 @@
-import {
-  type EnPopulationLabelType,
-  POPULATION_LABELS,
-  POPULATION_LABELS_EN,
-} from '@/types/PopulationLabelSchema'
+import { POPULATION_LABELS, type PopulationLabelType } from '@/types/PopulationLabelSchema'
 import type React from 'react'
 
 type SelectPopulationLabelProps = {
-  selectedLabel: EnPopulationLabelType
+  selectedLabel: PopulationLabelType
   handlePopulationLabel: (e: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
@@ -23,9 +19,9 @@ export const SelectPopulationLabel: React.FC<SelectPopulationLabelProps> = ({
           onChange={handlePopulationLabel}
           title="人口構成"
         >
-          {POPULATION_LABELS_EN.map((enLabel, index) => (
-            <option key={enLabel} value={enLabel}>
-              {POPULATION_LABELS[index]}
+          {POPULATION_LABELS.map((label) => (
+            <option key={label} value={label}>
+              {label}
             </option>
           ))}
         </select>

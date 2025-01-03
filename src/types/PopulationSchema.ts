@@ -1,6 +1,5 @@
 import { z } from 'zod'
 import { PopulationLabelSchema } from './PopulationLabelSchema'
-
 const PopulationDataSchema = z.object({
   year: z.number(),
   value: z.number(),
@@ -8,7 +7,7 @@ const PopulationDataSchema = z.object({
 })
 
 const PopulationCategorySchema = z.object({
-  label: PopulationLabelSchema.shape.ja,
+  label: PopulationLabelSchema,
   data: z.array(PopulationDataSchema),
 })
 
