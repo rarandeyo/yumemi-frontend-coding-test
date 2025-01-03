@@ -1,16 +1,17 @@
-'use client'
-
 import type { Prefectures } from '@/types/PrefecturesSchema'
-import { handlePrefectureCheckboxes } from '@/utils/handlePrefectureCheckboxes'
-import React from 'react'
+import type React from 'react'
 
 type PrefectureCheckboxesProps = {
   prefectures: Prefectures
+  selectedPrefCodes: number[]
+  handlePrefectureCheckboxes: (prefCode: number) => void
 }
 
-export const PrefectureCheckboxes: React.FC<PrefectureCheckboxesProps> = ({ prefectures }) => {
-  const [selectedPrefs, setSelectedPrefs] = React.useState<number[]>([])
-
+export const PrefectureCheckboxes: React.FC<PrefectureCheckboxesProps> = ({
+  prefectures,
+  selectedPrefCodes,
+  handlePrefectureCheckboxes,
+}) => {
   return (
     <section className="mx-auto flex flex-wrap rounded-lg border border-gray-300 bg-light-blue p-4 shadow-md md:p-6 lg:p-8">
       {prefectures.map((pref) => (
@@ -20,8 +21,8 @@ export const PrefectureCheckboxes: React.FC<PrefectureCheckboxesProps> = ({ pref
               className="form-checkbox h-4 w-4 text-blue-600 md:h-5 md:w-5"
               aria-label="都道府県を選択"
               type="checkbox"
-              checked={selectedPrefs.includes(pref.prefCode)}
-              onChange={() => handlePrefectureCheckboxes(pref.prefCode, setSelectedPrefs)}
+              checked={selectedPrefCodes.includes(pref.prefCode)}
+              onChange={() => handlePrefectureCheckboxes(pref.prefCode)}
             />
             <span className="text-base md:text-lg">{pref.prefName}</span>
           </label>
