@@ -1,5 +1,3 @@
-'use client'
-
 import {
   type EnPopulationLabelType,
   POPULATION_LABELS,

@@ -1,5 +1,3 @@
-'use client'
-
 import type { Prefectures } from '@/types/PrefecturesSchema'
 import { handlePrefectureCheckboxes } from '@/utils/handlePrefectureCheckboxes'
 import React from 'react'
