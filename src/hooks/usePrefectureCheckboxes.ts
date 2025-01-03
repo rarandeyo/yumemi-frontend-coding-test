@@ -1,25 +1,25 @@
-import type { PopulationResult } from '@/types/PopulationSchema'
-import type { PrefectureStates, Prefectures } from '@/types/PrefecturesSchema'
+import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
+import type { Prefecture, PrefectureState } from '@/types/PrefecturesSchema'
 import type React from 'react'
 import { useCallback, useState } from 'react'
 
 type UsePrefectureCheckboxesReturn = {
-  prefectureStates: PrefectureStates
-  populationList: PopulationResult[]
+  prefectureStates: PrefectureState[]
+  populationList: PopulationDataWithPrefCode[]
   handlePrefectureCheckboxes: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>
 }
 
 export const usePrefectureCheckboxes = (
-  prefectures: Prefectures,
+  prefectures: Prefecture[],
 ): UsePrefectureCheckboxesReturn => {
-  const [prefectureStates, setPrefectureStates] = useState(() =>
+  const [prefectureStates, setPrefectureStates] = useState<PrefectureState[]>(() =>
     prefectures.map((pref) => ({
       isSelected: false,
       ...pref,
     })),
   )
 
-  const [populationList, setPopulationList] = useState<PopulationResult[]>([])
+  const [populationList, setPopulationList] = useState<PopulationDataWithPrefCode[]>([])
 
   const togglePrefectureSelection = (prefCode: number): void =>
     setPrefectureStates((prefStates) =>
@@ -28,19 +28,22 @@ export const usePrefectureCheckboxes = (
       ),
     )
 
-  const fetchPopulationData = useCallback(async (prefCode: number): Promise<PopulationResult> => {
-    try {
-      const response = await fetch(`/api/population?prefCode=${prefCode}`)
-      if (!response.ok) {
-        throw new Error('データの取得に失敗しました')
+  const fetchPopulationData = useCallback(
+    async (prefCode: number): Promise<PopulationDataWithPrefCode> => {
+      try {
+        const response = await fetch(`/api/population?prefCode=${prefCode}`)
+        if (!response.ok) {
+          throw new Error('データの取得に失敗しました')
+        }
+        const data = await response.json()
+        return data
+      } catch (error) {
+        console.error('人口データの取得中にエラーが発生しました:', error)
+        throw error
       }
-      const data = await response.json()
-      return data
-    } catch (error) {
-      console.error('人口データの取得中にエラーが発生しました:', error)
-      throw error
-    }
-  }, [])
+    },
+    [],
+  )
 
   const handlePrefectureCheckboxes = async (
     e: React.ChangeEvent<HTMLInputElement>,

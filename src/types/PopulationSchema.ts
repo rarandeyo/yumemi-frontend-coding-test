@@ -1,25 +1,30 @@
 import { z } from 'zod'
 import { PopulationLabelSchema } from './PopulationLabelSchema'
-const PopulationDataSchema = z.object({
-  year: z.number(),
-  value: z.number(),
-  rate: z.number().optional(),
+import { PrefectureSchema } from './PrefecturesSchema'
+
+const PopulationCompositionPerYearSchema = z.object({
+  boundaryYear: z.number().int(),
+  data: z.array(
+    z.object({
+      label: PopulationLabelSchema,
+      data: z.array(
+        z.object({
+          year: z.number().int(),
+          value: z.number().int(),
+          rate: z.number().optional(),
+        }),
+      ),
+    }),
+  ),
 })
 
-const PopulationCategorySchema = z.object({
-  label: PopulationLabelSchema,
-  data: z.array(PopulationDataSchema),
+export const PopulationDataWithPrefCodeSchema = PopulationCompositionPerYearSchema.extend({
+  prefCode: PrefectureSchema.shape.prefCode,
 })
 
-export const PopulationResultSchema = z.object({
-  prefCode: z.number(),
-  boundaryYear: z.number(),
-  data: z.array(PopulationCategorySchema).length(4),
-})
-
-export const PopulationDataResponseSchema = z.object({
+export const PopulationCompositionPerYearResponseSchema = z.object({
   message: z.null(),
-  result: PopulationResultSchema,
+  result: PopulationCompositionPerYearSchema,
 })
 
-export type PopulationResult = z.infer<typeof PopulationResultSchema>
+export type PopulationDataWithPrefCode = z.infer<typeof PopulationDataWithPrefCodeSchema>

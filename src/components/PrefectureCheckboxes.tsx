@@ -1,8 +1,8 @@
-import type { PrefectureStates } from '@/types/PrefecturesSchema'
+import type { PrefectureState } from '@/types/PrefecturesSchema'
 import type React from 'react'
 
 type PrefectureCheckboxesProps = {
-  prefectureStates: PrefectureStates
+  prefectureStates: PrefectureState[]
   handlePrefectureCheckboxes: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
