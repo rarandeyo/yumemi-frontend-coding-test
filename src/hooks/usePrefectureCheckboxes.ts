@@ -1,25 +1,23 @@
+import type { PrefectureStates } from '@/types/PrefecturesSchema'
+import type React from 'react'
 import { useState } from 'react'
 
-export const usePrefectureCheckboxes = (): {
-  selectedPrefCodes: number[]
-  handlePrefectureCheckboxes: (prefCode: number) => void
-} => {
-  const [selectedPrefCodes, setSelectedPrefCodes] = useState<number[]>([])
+export const usePrefectureCheckboxes = (defaultPrefectureStates: PrefectureStates) => {
+  const [prefectureStates, setPrefectureStates] =
+    useState<PrefectureStates>(defaultPrefectureStates)
 
-  const handlePrefectureCheckboxes = (prefCode: number) => {
-    setSelectedPrefCodes((prev) => {
-      const isPrefCodeSelected = prev.includes(prefCode)
+  const handlePrefectureCheckboxes = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const prefCode = Number(e.currentTarget.value)
 
-      if (isPrefCodeSelected) {
-        return prev.filter((code) => code !== prefCode)
-      }
-
-      return [...prev, prefCode]
-    })
+    setPrefectureStates((prev) =>
+      prev.map((pref) =>
+        pref.prefCode === prefCode ? { ...pref, isSelected: !pref.isSelected } : pref,
+      ),
+    )
   }
 
   return {
-    selectedPrefCodes,
+    prefectureStates,
     handlePrefectureCheckboxes,
   }
 }
