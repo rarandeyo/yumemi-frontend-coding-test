@@ -1,8 +1,8 @@
 import { getApiConfig } from '@/config/apiConfig'
 import {
+  PopulationCompositionPerYearResponseSchema,
   type PopulationDataWithPrefCode,
-  PopulationDataWithPrefCodeSchema,
-} from '@/types/PopulationSchema'
+} from '../types/PopulationSchema'
 
 export const getPopulationData = async (prefCode: number): Promise<PopulationDataWithPrefCode> => {
   const { baseUrl, apiKey } = getApiConfig()
@@ -24,15 +24,15 @@ export const getPopulationData = async (prefCode: number): Promise<PopulationDat
     }
 
     const data = await res.json()
+    const validatedData = PopulationCompositionPerYearResponseSchema.parse(data)
 
     //APIのdataにprefCodeを追加
     const dataWithPrefCode = {
       prefCode,
-      ...data.result,
+      ...validatedData.result,
     }
 
-    const validatedData = PopulationDataWithPrefCodeSchema.parse(dataWithPrefCode)
-    return validatedData
+    return dataWithPrefCode
   } catch (error) {
     console.error(`都道府県コード ${prefCode} のデータ取得中にエラーが発生しました:`, error)
     throw error
