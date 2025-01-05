@@ -1,8 +1,8 @@
+import { useSelectedPopulationData } from '@/hooks/useSelectedPopulationData'
 import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
 import type { Prefecture, PrefectureState } from '@/types/PrefecturesSchema'
 import type React from 'react'
 import { useCallback, useState } from 'react'
-import { useSelectedPopulationData } from './useSelectedPopulationData'
 
 type UsePrefectureCheckboxesReturn = {
   prefectureStates: PrefectureState[]

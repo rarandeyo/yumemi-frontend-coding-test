@@ -2,7 +2,7 @@ import { getApiConfig } from '@/config/apiConfig'
 import {
   PopulationCompositionPerYearResponseSchema,
   type PopulationDataWithPrefCode,
-} from '../types/PopulationSchema'
+} from '@/types/PopulationSchema'
 
 export const getPopulationData = async (prefCode: number): Promise<PopulationDataWithPrefCode> => {
   const { baseUrl, apiKey } = getApiConfig()

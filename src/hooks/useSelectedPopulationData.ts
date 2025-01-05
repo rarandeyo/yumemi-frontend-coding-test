@@ -1,5 +1,5 @@
+import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
 import { useCallback, useState } from 'react'
-import type { PopulationDataWithPrefCode } from '../types/PopulationSchema'
 
 export const useSelectedPopulationData = (): {
   populationData: PopulationDataWithPrefCode[]
