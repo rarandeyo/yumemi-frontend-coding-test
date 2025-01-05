@@ -1,8 +1,8 @@
+import { NetworkError } from '@/types/Errors'
 import { PrefectureSchema } from '@/types/PrefecturesSchema'
 import { getPopulationData } from '@/utils/getPopulationData'
 import { zValidator } from '@hono/zod-validator'
 import { Hono } from 'hono'
-import {} from 'next/server'
 import { z } from 'zod'
 
 const PopulationDataParamsSchema = z.object({
@@ -21,7 +21,10 @@ const app = new Hono().get(
     try {
       const populationData = await getPopulationData(prefCode)
       return c.json(populationData)
-    } catch (error) {
+    } catch (error: unknown) {
+      if (error instanceof NetworkError) {
+        return c.json({ error: 'External API Network Error' }, 424)
+      }
       return c.json({ error: 'Internal Server Error' }, 500)
     }
   },
