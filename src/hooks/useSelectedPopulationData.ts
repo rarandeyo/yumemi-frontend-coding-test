@@ -1,4 +1,4 @@
-import { apiYumemiClient } from '@/libs/apiYumemiClient'
+import { apiClient } from '@/libs/apiClient'
 import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
 
 import { useCallback, useState } from 'react'
@@ -12,7 +12,7 @@ export const useSelectedPopulationData = (): {
   const fetchPopulationData = useCallback(
     async (prefCode: number): Promise<PopulationDataWithPrefCode> => {
       try {
-        const response = await apiYumemiClient.api.population.$get({
+        const response = await apiClient.api.population.$get({
           query: {
             prefCode: prefCode.toString(),
           },
