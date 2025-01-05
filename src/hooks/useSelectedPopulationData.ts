@@ -1,5 +1,7 @@
+import { apiClient } from '@/libs/apiClient'
+import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
+
 import { useCallback, useState } from 'react'
-import type { PopulationDataWithPrefCode } from '../types/PopulationSchema'
 
 export const useSelectedPopulationData = (): {
   populationData: PopulationDataWithPrefCode[]
@@ -7,14 +9,18 @@ export const useSelectedPopulationData = (): {
   deletePopulationData: (prefCode: number) => void
 } => {
   const [populationData, setPopulationData] = useState<PopulationDataWithPrefCode[]>([])
-
   const fetchPopulationData = useCallback(
     async (prefCode: number): Promise<PopulationDataWithPrefCode> => {
       try {
-        const response = await fetch(`/api/population?prefCode=${prefCode}`)
+        const response = await apiClient.api.population.$get({
+          query: {
+            prefCode: prefCode.toString(),
+          },
+        })
         if (!response.ok) {
-          throw new Error('データの取得に失敗しました')
+          throw new Error('人口データの取得中にエラーが発生しました')
         }
+
         const data = await response.json()
         return data
       } catch (error) {
