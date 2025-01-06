@@ -1,6 +1,6 @@
 import { apiClient } from '@/libs/apiClient'
+import { HttpError, NetworkError } from '@/types/Errors'
 import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
-
 import { useCallback, useState } from 'react'
 
 export const useSelectedPopulationData = (): {
@@ -18,14 +18,19 @@ export const useSelectedPopulationData = (): {
           },
         })
         if (!response.ok) {
-          throw new Error('人口データの取得中にエラーが発生しました')
+          if (response.status === 424) {
+            throw new NetworkError('サーバー側でネットワークエラーが発生しました')
+          }
+          throw new HttpError(response)
         }
 
         const data = await response.json()
         return data
       } catch (error) {
-        console.error('人口データの取得中にエラーが発生しました:', error)
-        throw error
+        if (error instanceof HttpError || error instanceof NetworkError) {
+          throw error
+        }
+        throw new Error(`データの取得中に想定外のエラーが発生しました: ${error}`)
       }
     },
     [],
