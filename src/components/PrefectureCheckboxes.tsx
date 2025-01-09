@@ -9,7 +9,7 @@ type PrefectureCheckboxesProps = {
 export const PrefectureCheckboxes = React.memo<PrefectureCheckboxesProps>(
   ({ prefectureStates, handlePrefectureCheckboxes }) => {
     return (
-      <section className="mx-auto flex flex-wrap rounded-lg border border-gray-300 bg-light-blue p-4 shadow-md md:p-6 lg:p-8">
+      <section className="mx-auto flex flex-wrap rounded-2xl border border-gray-300 bg-light-blue p-4 shadow-md md:p-6 lg:p-8">
         {prefectureStates.map((pref) => (
           <div key={pref.prefCode} className="w-1/2 p-1.5 md:w-1/3 lg:w-1/4 xl:w-1/5">
             <label className="flex items-center space-x-1.5 hover:cursor-pointer md:space-x-2">

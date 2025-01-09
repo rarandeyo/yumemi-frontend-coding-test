@@ -28,7 +28,7 @@ export const PopulationGraph = React.memo<PopulationGraphProps>(
     const chartData = getChartData(selectedLabel, populationData)
 
     return (
-      <div className="mx-auto w-full rounded-lg bg-light-blue sm:p-4 md:p-6 lg:p-8">
+      <div className="mx-auto w-full rounded-2xl bg-light-blue sm:p-4 md:p-6 lg:p-8">
         <div className="h-[400px] w-full md:h-[500px] lg:h-[600px] xl:h-[700px]">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData} margin={{ right: 30 }}>
