@@ -1,8 +1,8 @@
 import {
   PopulationCompositionPerYearResponseSchema,
   type PopulationDataWithPrefCode,
-} from '../types/PopulationSchema'
-import { yumemiApiFetcher } from './yumemiApiFetcher'
+} from '@/types/PopulationSchema'
+import { yumemiApiFetcher } from '@/utils/yumemiApiFetcher'
 
 export const getPopulationData = async (prefCode: number): Promise<PopulationDataWithPrefCode> => {
   const validatedData = await yumemiApiFetcher(

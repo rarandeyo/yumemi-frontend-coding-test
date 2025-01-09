@@ -30,6 +30,9 @@ export const useSelectedPopulationData = (): {
         if (error instanceof HttpError || error instanceof NetworkError) {
           throw error
         }
+        if (error instanceof TypeError) {
+          throw new NetworkError('ネットワークエラーが発生しました')
+        }
         throw new Error(`データの取得中に想定外のエラーが発生しました: ${error}`)
       }
     },

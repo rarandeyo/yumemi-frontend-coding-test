@@ -9,7 +9,8 @@ type UsePrefectureCheckboxesReturn = {
   prefectureStates: PrefectureState[]
   populationData: PopulationDataWithPrefCode[]
   handlePrefectureCheckboxes: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>
-  error: Error | null
+  error: string | null
+  clearError: () => void
 }
 
 export const usePrefectureCheckboxes = (
@@ -21,7 +22,11 @@ export const usePrefectureCheckboxes = (
       ...pref,
     })),
   )
-  const [error, setError] = useState<Error | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  const clearError = useCallback(() => {
+    setError(null)
+  }, [])
 
   const { populationData, addPopulationData, deletePopulationData } = useSelectedPopulationData()
 
@@ -46,8 +51,13 @@ export const usePrefectureCheckboxes = (
         }
         togglePrefectureSelection(prefCode)
       } catch (error) {
-        if (error instanceof HttpError || error instanceof NetworkError) {
-          setError(error)
+        console.error(error)
+        if (error instanceof HttpError) {
+          setError('データの取得に失敗しました')
+          return
+        }
+        if (error instanceof NetworkError) {
+          setError('ネットワークエラーが発生しました')
           return
         }
         throw error
@@ -61,5 +71,6 @@ export const usePrefectureCheckboxes = (
     populationData,
     handlePrefectureCheckboxes,
     error,
+    clearError,
   }
 }
