@@ -8,6 +8,7 @@
     "start": "next start",
     "check": "biome check ./",
     "fix": "biome check --write ./",
+    "type-check": "tsc --noEmit",
     "test": "vitest"
   },
   "dependencies": {
