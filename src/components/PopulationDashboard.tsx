@@ -1,7 +1,7 @@
 'use client'
 
 import { ErrorMessage } from '@/components/ErrorMessage'
-import PopulationGraph from '@/components/PopulationGraph'
+import { PopulationGraph } from '@/components/PopulationGraph'
 import { PrefectureCheckboxes } from '@/components/PrefectureCheckboxes'
 import { SelectPopulationLabel } from '@/components/SelectPopulationLabel'
 

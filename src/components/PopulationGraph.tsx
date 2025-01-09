@@ -60,5 +60,3 @@ export const PopulationGraph = React.memo<PopulationGraphProps>(
     )
   },
 )
-
-export default PopulationGraph
