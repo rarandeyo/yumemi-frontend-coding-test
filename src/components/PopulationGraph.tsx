@@ -1,10 +1,9 @@
 import { CHART_STYLES } from '@/constants/chartStyles'
-import { useChartData } from '@/hooks/useChartData'
-import { useGetPrefectureName } from '@/hooks/usePrefectureName'
 import type { PopulationLabelType } from '@/types/PopulationLabelSchema'
 import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
 import type { PrefectureState } from '@/types/PrefecturesSchema'
-import { getLineColor } from '@/utils/getLineColor'
+import { getChartData } from '@/utils/getChartData'
+import { getLineColor, getPrefectureName } from '@/utils/getGraphStyle'
 import type React from 'react'
 
 import {
@@ -29,8 +28,7 @@ export const PopulationGraph: React.FC<PopulationGraphProps> = ({
   populationData,
   selectedLabel,
 }) => {
-  const { chartData } = useChartData(selectedLabel, populationData)
-  const { getPrefectureName } = useGetPrefectureName(prefectureStates)
+  const chartData = getChartData(selectedLabel, populationData)
 
   return (
     <div className="mx-auto w-full rounded-lg bg-light-blue sm:p-4 md:p-6 lg:p-8">
@@ -52,7 +50,7 @@ export const PopulationGraph: React.FC<PopulationGraphProps> = ({
                 key={prefecture.prefCode}
                 type="monotone"
                 dataKey={prefecture.prefCode}
-                name={getPrefectureName(prefecture.prefCode)}
+                name={getPrefectureName(prefectureStates, prefecture.prefCode)}
                 stroke={getLineColor(prefecture.prefCode)}
                 strokeWidth={2}
                 dot={false}
