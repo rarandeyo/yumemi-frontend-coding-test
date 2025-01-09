@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
 
-First, run the development server:
+
+
+# 都道府県別の総人口推移グラフ
+
+## 概要
+
+このプロジェクトは、[株式会社ゆめみ フロントエンドコーディング試験](https://yumemi.notion.site/0e9ef27b55704d7882aab55cc86c999d)の課題として作成されました。
+
+[採点基準についてはこちら](https://note.yumemi.co.jp/n/ned7429b59556)
+
+## 必要要件
+
+- Node.js v20以上
+- pnpm v9以上
+
+## 技術スタック
+
+### コア
+- Next.js 15.0.4
+- React 19.0.0
+- TypeScript 5.7.2
+- Tailwind CSS 3.4.17
+- Recharts 2.15.0
+
+### API
+- Hono 4.6.15 (Next.js Route Handlers with Edge Runtime)
+- Zod 3.24.1
+
+### 開発ツール
+- Biome 1.9.4
+- Vitest 2.1.8
+
+## セットアップ
+
+1. 依存関係をインストール:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. 環境変数の設定:
 
-## Learn More
+```bash
+cp .env.local.example .env.local
+```
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`.env.local`ファイルを編集し、必要な環境変数を設定してください。
 
-## Deploy on Vercel
+3. 開発サーバーの起動:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+[http://localhost:3000](http://localhost:3000)にアクセスして結果を確認できます。
+
+## 利用可能なスクリプト
+
+```bash
+# 開発サーバーの起動
+pnpm dev
+
+# Biomeによるコード品質チェック
+pnpm check
+
+# Biomeによる自動修正
+pnpm fix
+
+# 型チェック
+pnpm type-check
+
+# Vitestによるテストの実行
+pnpm test
+```
+
