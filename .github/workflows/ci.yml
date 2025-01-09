@@ -35,4 +35,7 @@ jobs:
         run: pnpm test
 
       - name: Build
+        env:
+          YUMEMI_BASE_URL: ${{ secrets.YUMEMI_BASE_URL }}
+          YUMEMI_API_KEY: ${{ secrets.YUMEMI_API_KEY }}
         run: pnpm build
