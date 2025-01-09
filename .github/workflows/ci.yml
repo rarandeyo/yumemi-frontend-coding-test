@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ "dev" ]
+  push:
+    branches:
+      - '**'
+      - '!main'
+      - '!dev'
+
+jobs:
+  build-test-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9.11
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint
+        run: pnpm check
+
+      - name: Type check
+        run: pnpm type-check
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build
+        env:
+          YUMEMI_BASE_URL: ${{ secrets.YUMEMI_BASE_URL }}
+          YUMEMI_API_KEY: ${{ secrets.YUMEMI_API_KEY }}
+        run: pnpm build
