@@ -15,7 +15,6 @@ export const PrefectureCheckboxes = React.memo<PrefectureCheckboxesProps>(
             <label className="flex items-center space-x-1.5 hover:cursor-pointer md:space-x-2">
               <input
                 className="form-checkbox h-4 w-4 text-blue-600 md:h-5 md:w-5"
-                aria-label="都道府県を選択"
                 type="checkbox"
                 value={pref.prefCode}
                 checked={pref.isSelected}
