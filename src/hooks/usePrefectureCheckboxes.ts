@@ -1,4 +1,5 @@
 import { useSelectedPopulationData } from '@/hooks/useSelectedPopulationData'
+import { HttpError, NetworkError } from '@/types/Errors'
 import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
 import type { Prefecture, PrefectureState } from '@/types/PrefecturesSchema'
 import type React from 'react'
@@ -8,6 +9,8 @@ type UsePrefectureCheckboxesReturn = {
   prefectureStates: PrefectureState[]
   populationData: PopulationDataWithPrefCode[]
   handlePrefectureCheckboxes: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>
+  error: string | null
+  clearError: () => void
 }
 
 export const usePrefectureCheckboxes = (
@@ -19,6 +22,11 @@ export const usePrefectureCheckboxes = (
       ...pref,
     })),
   )
+  const [error, setError] = useState<string | null>(null)
+
+  const clearError = useCallback(() => {
+    setError(null)
+  }, [])
 
   const { populationData, addPopulationData, deletePopulationData } = useSelectedPopulationData()
 
@@ -35,12 +43,24 @@ export const usePrefectureCheckboxes = (
       const prefCode = Number(e.currentTarget.value)
       const isChecked = e.currentTarget.checked
 
-      togglePrefectureSelection(prefCode)
-
-      if (isChecked) {
-        await addPopulationData(prefCode)
-      } else {
-        deletePopulationData(prefCode)
+      try {
+        if (isChecked) {
+          await addPopulationData(prefCode)
+        } else {
+          deletePopulationData(prefCode)
+        }
+        togglePrefectureSelection(prefCode)
+      } catch (error) {
+        console.error(error)
+        if (error instanceof HttpError) {
+          setError('データの取得に失敗しました')
+          return
+        }
+        if (error instanceof NetworkError) {
+          setError('ネットワークエラーが発生しました')
+          return
+        }
+        throw error
       }
     },
     [addPopulationData, deletePopulationData, togglePrefectureSelection],
@@ -50,5 +70,7 @@ export const usePrefectureCheckboxes = (
     prefectureStates,
     populationData,
     handlePrefectureCheckboxes,
+    error,
+    clearError,
   }
 }
