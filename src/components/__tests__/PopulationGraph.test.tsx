@@ -15,12 +15,12 @@ vi.mock('recharts', () => ({
   CartesianGrid: () => <div />,
   Tooltip: () => <div />,
   Legend: () => <div />,
+  ReferenceLine: () => <div data-testid="reference-line" />,
 }))
 
 describe('PopulationGraph', () => {
   const createMockPrefectureStates = (): PrefectureState[] => [
     { prefCode: 1, prefName: '北海道', isSelected: true },
-    { prefCode: 13, prefName: '東京都', isSelected: true },
   ]
 
   const createMockPopulationData = (): PopulationDataWithPrefCode[] => [
@@ -62,7 +62,7 @@ describe('PopulationGraph', () => {
   })
 
   describe('正常系', () => {
-    it('グラフコンテナが正常に表示されること', () => {
+    it('グラフコンテナが正しいスタイルで表示されること', () => {
       const { container } = render(
         <PopulationGraph
           prefectureStates={mockPrefectureStates}
@@ -71,10 +71,23 @@ describe('PopulationGraph', () => {
         />,
       )
 
-      expect(container.querySelector('.mx-auto')).toBeInTheDocument()
+      const graphContainer = container.firstChild
+      expect(graphContainer).toHaveClass('mx-auto', 'w-full', 'rounded-2xl', 'bg-light-blue')
     })
 
-    it('選択された都道府県のデータが正常に表示されること', () => {
+    it('実績値と推計値を区切る参照線が表示されること', () => {
+      const { getByTestId } = render(
+        <PopulationGraph
+          prefectureStates={mockPrefectureStates}
+          populationData={mockPopulationData}
+          selectedLabel="総人口"
+        />,
+      )
+
+      expect(getByTestId('reference-line')).toBeInTheDocument()
+    })
+
+    it('選択された都道府県の数だけ線グラフが表示されること', () => {
       const { container } = render(
         <PopulationGraph
           prefectureStates={mockPrefectureStates}
@@ -89,12 +102,12 @@ describe('PopulationGraph', () => {
   })
 
   describe('異常系', () => {
-    it('データが空の場合でもエラーが発生しないこと', () => {
+    it('データが空の場合でもエラーが発生せずグラフコンテナが表示されること', () => {
       const { container } = render(
         <PopulationGraph prefectureStates={[]} populationData={[]} selectedLabel="総人口" />,
       )
 
-      expect(container.querySelector('.mx-auto')).toBeInTheDocument()
+      expect(container.firstChild).toHaveClass('mx-auto', 'w-full', 'rounded-2xl', 'bg-light-blue')
     })
   })
 })
