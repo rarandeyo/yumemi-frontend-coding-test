@@ -3,6 +3,8 @@ import { getPrefectures } from '@/utils/getPrefectures'
 import { render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+vi.mock('server-only', () => ({}))
+
 vi.mock('@/utils/getPrefectures')
 vi.mock('@/components/PopulationDashboard', () => ({
   PopulationDashboard: ({ prefectures }: { prefectures: unknown[] }) => (
