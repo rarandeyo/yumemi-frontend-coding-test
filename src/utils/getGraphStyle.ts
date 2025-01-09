@@ -11,3 +11,12 @@ export const getPrefectureName = (
 ): string => {
   return prefectureStates.find((pref) => pref.prefCode === prefCode)?.prefName ?? 'undefined'
 }
+
+export const formatPopulation = (value: number): string => {
+  if (value >= 10000) {
+    return `${(value / 10000).toLocaleString()}万人`
+  }
+  return `${value.toLocaleString()}人`
+}
+
+export const formatTooltipLabel = (label: number): string => `${label}年`

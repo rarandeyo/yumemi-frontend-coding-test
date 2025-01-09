@@ -3,7 +3,12 @@ import type { PopulationLabelType } from '@/types/PopulationLabelSchema'
 import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
 import type { PrefectureState } from '@/types/PrefecturesSchema'
 import { getChartData } from '@/utils/getChartData'
-import { getLineColor, getPrefectureName } from '@/utils/getGraphStyle'
+import {
+  formatPopulation,
+  formatTooltipLabel,
+  getLineColor,
+  getPrefectureName,
+} from '@/utils/getGraphStyle'
 import React from 'react'
 
 import {
@@ -34,8 +39,8 @@ export const PopulationGraph = React.memo<PopulationGraphProps>(
             <LineChart data={chartData} margin={{ right: 30 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(0, 0, 0, 0.5)" />
               <XAxis dataKey="year" tick={CHART_STYLES.axis} />
-              <YAxis tick={CHART_STYLES.axis} />
-              <Tooltip />
+              <YAxis tick={CHART_STYLES.axis} tickFormatter={formatPopulation} />
+              <Tooltip formatter={formatPopulation} labelFormatter={formatTooltipLabel} />
               <Legend
                 verticalAlign="top"
                 wrapperStyle={CHART_STYLES.legend}
