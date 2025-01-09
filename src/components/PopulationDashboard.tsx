@@ -20,7 +20,7 @@ export const PopulationDashboard = React.memo<PopulationDashboardProps>(({ prefe
   const { selectedLabel, handlePopulationLabel } = useSelectPopulationLabel()
 
   return (
-    <div className="relative">
+    <div className="relative p-4 md:p-6">
       <ErrorMessage message={error} onClose={clearError} />
       <div className="flex flex-col space-y-4">
         <PrefectureCheckboxes
