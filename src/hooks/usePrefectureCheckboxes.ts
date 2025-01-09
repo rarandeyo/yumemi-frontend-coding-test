@@ -3,7 +3,7 @@ import { HttpError, NetworkError } from '@/types/Errors'
 import type { PopulationDataWithPrefCode } from '@/types/PopulationSchema'
 import type { Prefecture, PrefectureState } from '@/types/PrefecturesSchema'
 import type React from 'react'
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 type UsePrefectureCheckboxesReturn = {
   prefectureStates: PrefectureState[]
@@ -23,6 +23,7 @@ export const usePrefectureCheckboxes = (
     })),
   )
   const [error, setError] = useState<string | null>(null)
+  const isProcessing = useRef<boolean>(false)
 
   const clearError = useCallback(() => {
     setError(null)
@@ -40,6 +41,9 @@ export const usePrefectureCheckboxes = (
 
   const handlePrefectureCheckboxes = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+      if (isProcessing.current) return
+      isProcessing.current = true
+
       const prefCode = Number(e.currentTarget.value)
       const isChecked = e.currentTarget.checked
 
@@ -61,6 +65,8 @@ export const usePrefectureCheckboxes = (
           return
         }
         throw error
+      } finally {
+        isProcessing.current = false
       }
     },
     [addPopulationData, deletePopulationData, togglePrefectureSelection],

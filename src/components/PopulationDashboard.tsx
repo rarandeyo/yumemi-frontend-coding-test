@@ -1,20 +1,20 @@
 'use client'
 
 import { ErrorMessage } from '@/components/ErrorMessage'
-import PopulationGraph from '@/components/PopulationGraph'
+import { PopulationGraph } from '@/components/PopulationGraph'
 import { PrefectureCheckboxes } from '@/components/PrefectureCheckboxes'
 import { SelectPopulationLabel } from '@/components/SelectPopulationLabel'
 
 import { usePrefectureCheckboxes } from '@/hooks/usePrefectureCheckboxes'
 import { useSelectPopulationLabel } from '@/hooks/useSelectPopulationLabel'
 import type { Prefecture } from '@/types/PrefecturesSchema'
-import type React from 'react'
+import React from 'react'
 
 type PopulationDashboardProps = {
   prefectures: Prefecture[]
 }
 
-export const PopulationDashboard: React.FC<PopulationDashboardProps> = ({ prefectures }) => {
+export const PopulationDashboard = React.memo<PopulationDashboardProps>(({ prefectures }) => {
   const { prefectureStates, populationData, handlePrefectureCheckboxes, error, clearError } =
     usePrefectureCheckboxes(prefectures)
   const { selectedLabel, handlePopulationLabel } = useSelectPopulationLabel()
@@ -39,4 +39,4 @@ export const PopulationDashboard: React.FC<PopulationDashboardProps> = ({ prefec
       </div>
     </div>
   )
-}
+})

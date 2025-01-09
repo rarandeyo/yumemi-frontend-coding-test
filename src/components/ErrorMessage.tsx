@@ -1,11 +1,11 @@
-import type React from 'react'
+import React from 'react'
 
 type ErrorMessageProps = {
   message: string | null
   onClose: () => void
 }
 
-export const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, onClose }) => {
+export const ErrorMessage = React.memo<ErrorMessageProps>(({ message, onClose }) => {
   if (!message) return null
 
   return (
@@ -23,4 +23,4 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, onClose }) 
       </div>
     </div>
   )
-}
+})
